@@ -46,33 +46,33 @@ class LoginGUI(Frame):
 
     def _auth(self, uname, password):
 
-        # Authentication for a specified username and password.
-        # Connect to the database, and select name from users where user = 'admin' and password = 'kittens'
-        # Or whatever the user typed in. Unfortunately, there is no validation so anything the user
-        # enters will be send directly to the database with NO validation.
+          # Authentication for a specified username and password.
+          # Connect to the database, and select name from users where user = 'admin' and password = 'kittens'
+          # Or whatever the user typed in. Unfortunately, there is no validation so anything the user
+          # enters will be send directly to the database with NO validation.
 
-        print('Attempting to login user with username: %s \npassword: %s' % (uname, password))
+          print('Attempting to login user with username: %s \npassword: %s' % (uname, password))
 
-        db = sqlite3.connect(database_filename)
-        db.row_factory = sqlite3.Row  # Row factory allows us to refer to columns by name (default is by integer index)
-        cursor = db.cursor()
+          db = sqlite3.connect(database_filename)
+          db.row_factory = sqlite3.Row  # Row factory allows us to refer to columns by name (default is by integer index)
+          cursor = db.cursor()
 
-        sql_statement = '''SELECT name FROM users WHERE username = '%s' and password = '%s' ''' % (uname, password)
+          sql_statement = ('SELECT name FROM users WHERE username = (?) and password = (?)')
 
-        print('About to execute the following SQL statement: \n' + sql_statement)
+          print('About to execute the following SQL statement: \n' + sql_statement)
 
-        cursor.execute(sql_statement)   # Execute the SQL statement we created
+          cursor.execute(sql_statement, (uname, password))   # Execute the SQL statement we created
 
-        result = None  # Assume login fails, unless DB returns a row for this user
+          result = None  # Assume login fails, unless DB returns a row for this user
 
-        # This loop won't run if no results are returned.
-        for row in cursor:
-            result = row['name']  # Extract name from first row
-            break
+          # This loop won't run if no results are returned.
+          for row in cursor:
+              result = row['name']  # Extract name from first row
+              break
 
-        db.close()
+          db.close()
 
-        return result
+          return result
 
 
     def _quit(self):
@@ -137,6 +137,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-

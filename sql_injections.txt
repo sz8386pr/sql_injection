@@ -1,0 +1,10 @@
+as recommended, I started with
+  "whatever' or '1'='1" for the password
+and then followed by
+  "' or password like 'e%" or "' or password like 'ki%" for the password and such.
+
+However, I've noticed that username field didn't even matter.
+I left it blank and went with different variation of
+' or password like 'k% and such, I could still login with different users.
+
+According to the output, I think it's because due to that it adds or condition, that it is able to pass the user verification process.
